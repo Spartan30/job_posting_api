@@ -42,3 +42,12 @@ app.post('/jobposting/:id', (req: Request, res: Response) => {
 
 
 app.listen(PORT, () => console.log('Server running on port ' + PORT))
+
+//id
+//title
+//description
+//location
+//hourly pay rate
+
+//creation datetime
+//updated datetime
