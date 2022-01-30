@@ -31,7 +31,7 @@ app.use(express.json());
 //Display Hello World home page
 app.get('/', (req: Request, res: Response) => {
     
-    res.send('Hello World');
+    res.status(200).send('Hello World');
 
 });
 
@@ -427,4 +427,4 @@ app.delete('/jobposting/:id', (req: Request, res: Response) => {
 });
 
 
-app.listen(PORT, () => console.log('Server running on port ' + PORT))
+module.exports = app.listen(PORT, () => console.log('Server running on port ' + PORT))
