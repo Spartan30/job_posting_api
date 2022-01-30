@@ -7,7 +7,7 @@
     "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
     "build": "tsc -p .",
-    "test": "mocha --check-leaks -r ts-node/register test/index.test.ts",
+    "test": "mocha --check-leaks --exit -r ts-node/register test/index.test.ts",
     "clean": "rm -rf build/*"
   },
   "keywords": [],
