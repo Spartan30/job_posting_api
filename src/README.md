@@ -5,6 +5,12 @@ Date: January 30, 2022
 App runs on port 5000
 
 
+To run in dev mode: npm run dev
+To build app: npm run build
+To run app *buld command must be executed first*: npm run start
+To execute tests: npm run test
+To clear build directory: npm run clean
+
 node v10.19.0
 nodemon v2.0.15
 express v4.17.2
