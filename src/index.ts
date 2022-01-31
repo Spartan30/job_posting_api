@@ -1,5 +1,5 @@
 //Author: Aaron McNeil
-//Date: January 30,2022
+//Date: January 31,2022
 //Endpoints for Job Posting API
 
 import express, {Application, Request, Response, NextFunction} from 'express';
