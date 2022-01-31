@@ -75,7 +75,7 @@ app.get('/jobposting/:id', (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else{
 
@@ -112,10 +112,10 @@ app.post('/jobposting/:id', (req: Request, res: Response) => {
     const { wage } = req.body;
 
     if (!id || !title || !description || !location || !wage) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else if(isNaN(wage)){
-        res.status(418).send({ message: 'Wage must be a valid number'})
+        res.status(418).send({ error: 'Wage must be a valid number'})
     }
     else{
 
@@ -156,10 +156,10 @@ app.post('/jobposting', (req: Request, res: Response) => {
     const { wage } = req.body;
 
     if (!title || !description || !location || !wage) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else if(isNaN(wage)){
-        res.status(418).send({ message: 'Wage must be a valid number'})
+        res.status(418).send({ error: 'Wage must be a valid number'})
     }
     else{
 
@@ -201,10 +201,10 @@ app.patch('/jobposting/:id', (req: Request, res: Response) => {
     const { wage } = req.body;
 
     if (!id || !title || !description || !location || !wage) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else if(isNaN(wage)){
-        res.status(418).send({ message: 'Wage must be a valid number'})
+        res.status(418).send({ error: 'Wage must be a valid number'})
     }
     else{
 
@@ -243,7 +243,7 @@ app.patch('/title/:id', (req: Request, res: Response) => {
     const { title } = req.body;
 
     if (!id || !title ) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else{
 
@@ -282,7 +282,7 @@ app.patch('/description/:id', (req: Request, res: Response) => {
     const { description } = req.body;
 
     if (!id || !description ) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else{
 
@@ -322,7 +322,7 @@ app.patch('/location/:id', (req: Request, res: Response) => {
     const { location } = req.body;
 
     if (!id || !location ) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else{
 
@@ -361,10 +361,10 @@ app.patch('/wage/:id', (req: Request, res: Response) => {
     const { wage } = req.body;
 
     if (!id || !wage ) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else if(isNaN(wage)){
-        res.status(418).send({ message: 'Wage must be a valid number'})
+        res.status(418).send({ error: 'Wage must be a valid number'})
     }
     else{
 
@@ -402,7 +402,7 @@ app.delete('/jobposting/:id', (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!id) {
-        res.status(418).send({ message: 'Missing required data'})
+        res.status(418).send({ error: 'Missing required data'})
     }
     else{
 
@@ -431,4 +431,5 @@ app.delete('/jobposting/:id', (req: Request, res: Response) => {
 });
 
 
+//Listen for connections
 module.exports = app.listen(PORT, () => console.log('Server running on port ' + PORT))
