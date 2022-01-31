@@ -13,17 +13,6 @@ describe("server checks", function(){
     });
 });
 
-//Test cases for GET endpoints
-describe("Job Posting GET", function(){
-    it("Get all job postings", function(done){
-        request(app).get("/jobposting").expect(200, done);
-    });
-
-    it("Get job posting of ID = 2", function(done){
-        request(app).get("/jobposting/2").expect(200, done);
-    });
-});
-
 
 //Test cases for POST endpoints
 describe("Job Posting POST", function(){
@@ -45,6 +34,19 @@ describe("Job Posting POST", function(){
         }).expect(200, done);
     });
 });
+
+
+//Test cases for GET endpoints
+describe("Job Posting GET", function(){
+    it("Get all job postings", function(done){
+        request(app).get("/jobposting").expect(200, done);
+    });
+
+    it("Get job posting of ID = 1", function(done){
+        request(app).get("/jobposting/1").expect(200, done);
+    });
+});
+
 
 //Test cases for PATCH endpoints
 describe("Job Posting PATCH", function(){
