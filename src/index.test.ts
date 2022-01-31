@@ -6,13 +6,15 @@ import request from "supertest";
 import { expect }from "chai";
 const app =  require("../src/index");
 
+//Test case to check that server starts successfully
 describe("server checks", function(){
     it("server is created without error", function(done){
         request(app).get("/").expect(200, done);
     });
 });
 
-describe("Job Posting GETS", function(){
+//Test cases for GET endpoints
+describe("Job Posting GET", function(){
     it("Get all job postings", function(done){
         request(app).get("/jobposting").expect(200, done);
     });
@@ -23,7 +25,8 @@ describe("Job Posting GETS", function(){
 });
 
 
-describe("Job Posting POSTS", function(){
+//Test cases for POST endpoints
+describe("Job Posting POST", function(){
     it("Create job posting", function(done){
         request(app).post("/jobposting").send({
             title: "Assembly Line Worker",
@@ -43,6 +46,7 @@ describe("Job Posting POSTS", function(){
     });
 });
 
+//Test cases for PATCH endpoints
 describe("Job Posting PATCH", function(){
     it("Update all fields for job posting of ID = 1", function(done){
         request(app).patch("/jobposting/1").send({
@@ -72,6 +76,7 @@ describe("Job Posting PATCH", function(){
     });
 });
 
+//Test cases for DELETE endpoints
 describe("Job Posting DELETE", function(){
     it("Delete job posting of ID = 1", function(done){
         request(app).delete("/jobposting/1").expect(200, done);
