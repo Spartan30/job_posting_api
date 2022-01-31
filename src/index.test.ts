@@ -1,3 +1,7 @@
+//Author: Aaron McNeil
+//Date: January 30,2022
+//Test cases for API
+
 import request from "supertest";
 import { expect }from "chai";
 const app =  require("../src/index");
