@@ -1,15 +1,106 @@
 //Author: Aaron McNeil
-//Date: January 30,2022
+//Date: January 31,2022
 //Test cases for API
 
 import request from "supertest";
 import { expect }from "chai";
 const app =  require("../src/index");
+import mysql from 'mysql2';
+
+
+//Configure mysql connection
+const connection = mysql.createConnection({
+    host: 'database-1.ch30r11oyqan.us-east-1.rds.amazonaws.com',
+    user: 'api',
+    password: 'JobPostApi01!',
+    database: 'job_posting_api',
+    connectionLimit: 10
+});
+
+connection.connect(function(error){
+    if (!!error){
+        console.log('Error: Failed to connect to database');
+    }
+})
+
+describe("Hooks - Test setup", function(){
+
+    before("Test setup", function(done){
+        
+        connection.query("DELETE FROM job_postings", function(error, rows, fields){
+            done()
+        });
+
+        connection.query("INSERT into job_postings VALUES(2, 'Sales Floor Associate', 'Assist customers with finding the products they want on the sales floor', 'Toronto, ON', 25.45, now(), now())", function(error, rows, fields){
+            done()
+        });
+
+        connection.query("INSERT into job_postings VALUES(3, 'Maintenance Technician', 'Perform prventative maintenance and repairs on factor machinery', 'Waterloo, ON', 35, now(), now())", function(error, rows, fields){
+            done()
+        });
+
+        connection.query("INSERT into job_postings VALUES(4, 'Customer Support', 'Answer questions from our customers via the phone', 'Hamilton, ON', 18.6, now(), now())", function(error, rows, fields){
+            done()
+        });
+
+    });
+
+});
+
+
 
 //Test case to check that server starts successfully
 describe("server checks", function(){
+
+    //Database setup
+    before("Test setup - Clear Table", function(done){
+        
+        connection.query("DELETE FROM job_postings", function(error, rows, fields){
+            done()
+        });
+
+    });
+
+    before("Test setup - Insert job posting 2", function(done){
+
+        connection.query("INSERT into job_postings VALUES(2, 'Sales Floor Associate', 'Assist customers with finding the products they want on the sales floor', 'Toronto, ON', 25.45, now(), now())", function(error, rows, fields){
+            done()
+        });
+
+    });
+
+    before("Test setup - Insert job posting 3", function(done){
+
+        connection.query("INSERT into job_postings VALUES(3, 'Maintenance Technician', 'Perform prventative maintenance and repairs on factor machinery', 'Waterloo, ON', 35, now(), now())", function(error, rows, fields){
+            done()
+        });
+
+    });
+
+    before("Test setup - Insert job posting 4", function(done){
+
+        connection.query("INSERT into job_postings VALUES(4, 'Customer Support', 'Answer questions from our customers via the phone', 'Hamilton, ON', 18.6, now(), now())", function(error, rows, fields){
+            done()
+        });
+
+    });
+
+    
+    //Check that server is running
     it("server is created without error", function(done){
         request(app).get("/").expect(200, done);
+    });
+});
+
+
+//Test cases for GET endpoints
+describe("Job Posting GET", function(){
+    it("Get all job postings", function(done){
+        request(app).get("/jobposting").expect(200, done);
+    });
+
+    it("Get job posting of ID = 2", function(done){
+        request(app).get("/jobposting/2").expect(200, done);
     });
 });
 
@@ -32,18 +123,6 @@ describe("Job Posting POST", function(){
             location: "Hamilton, ON",
             wage: "15.65"
         }).expect(200, done);
-    });
-});
-
-
-//Test cases for GET endpoints
-describe("Job Posting GET", function(){
-    it("Get all job postings", function(done){
-        request(app).get("/jobposting").expect(200, done);
-    });
-
-    it("Get job posting of ID = 1", function(done){
-        request(app).get("/jobposting/1").expect(200, done);
     });
 });
 
@@ -78,9 +157,19 @@ describe("Job Posting PATCH", function(){
     });
 });
 
+
 //Test cases for DELETE endpoints
 describe("Job Posting DELETE", function(){
     it("Delete job posting of ID = 1", function(done){
         request(app).delete("/jobposting/1").expect(200, done);
     });
+
+    //Database teardown
+    after("Test teardown - Clear table", function(done){
+        connection.query("DELETE FROM job_postings", function(error, rows, fields){
+            done()
+        });
+
+    });
+
 });
