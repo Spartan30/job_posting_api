@@ -9,11 +9,10 @@ API runs on port 5000
 ***Environment Setup***
 API uses node framework and npm for package management, they can be downloaded at this link: https://nodejs.org/en/download/
 Once downloaded please run to install node and npm
-Once installed, open the command line and go to the root of the project folder and execute (to install dependencies): sudo npm install
-
+Once installed, open a command line (as administrator), and go to the root of the project folder and execute: npm install
+Once the dependencies have finished installing, the below commands (under ***Scripts***) can be used to build, run, and test the API
 
 ***Scripts***
-Once the dependencies have finished installing, the below commands can be used to build, run, and test the API:
 
 To run in dev mode: npm run dev
 To build app: npm run build
