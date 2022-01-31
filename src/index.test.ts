@@ -23,31 +23,6 @@ connection.connect(function(error){
     }
 })
 
-describe("Hooks - Test setup", function(){
-
-    before("Test setup", function(done){
-        
-        connection.query("DELETE FROM job_postings", function(error, rows, fields){
-            done()
-        });
-
-        connection.query("INSERT into job_postings VALUES(2, 'Sales Floor Associate', 'Assist customers with finding the products they want on the sales floor', 'Toronto, ON', 25.45, now(), now())", function(error, rows, fields){
-            done()
-        });
-
-        connection.query("INSERT into job_postings VALUES(3, 'Maintenance Technician', 'Perform prventative maintenance and repairs on factor machinery', 'Waterloo, ON', 35, now(), now())", function(error, rows, fields){
-            done()
-        });
-
-        connection.query("INSERT into job_postings VALUES(4, 'Customer Support', 'Answer questions from our customers via the phone', 'Hamilton, ON', 18.6, now(), now())", function(error, rows, fields){
-            done()
-        });
-
-    });
-
-});
-
-
 
 //Test case to check that server starts successfully
 describe("server checks", function(){
@@ -63,7 +38,7 @@ describe("server checks", function(){
 
     before("Test setup - Insert job posting 2", function(done){
 
-        connection.query("INSERT into job_postings VALUES(2, 'Sales Floor Associate', 'Assist customers with finding the products they want on the sales floor', 'Toronto, ON', 25.45, now(), now())", function(error, rows, fields){
+        connection.query("INSERT into job_postings VALUES(2, 'Sales Floor Associate', 'Assist customers with finding the products they want on the sales floor', 'Toronto, ON', 25.45, 'Sales Inc', now(), now())", function(error, rows, fields){
             done()
         });
 
@@ -71,7 +46,7 @@ describe("server checks", function(){
 
     before("Test setup - Insert job posting 3", function(done){
 
-        connection.query("INSERT into job_postings VALUES(3, 'Maintenance Technician', 'Perform prventative maintenance and repairs on factor machinery', 'Waterloo, ON', 35, now(), now())", function(error, rows, fields){
+        connection.query("INSERT into job_postings VALUES(3, 'Maintenance Technician', 'Perform prventative maintenance and repairs on factor machinery', 'Waterloo, ON', 35, 'Automotive Corp', now(), now())", function(error, rows, fields){
             done()
         });
 
@@ -79,7 +54,7 @@ describe("server checks", function(){
 
     before("Test setup - Insert job posting 4", function(done){
 
-        connection.query("INSERT into job_postings VALUES(4, 'Customer Support', 'Answer questions from our customers via the phone', 'Hamilton, ON', 18.6, now(), now())", function(error, rows, fields){
+        connection.query("INSERT into job_postings VALUES(4, 'Customer Support', 'Answer questions from our customers via the phone', 'Hamilton, ON', 18.6, 'Furniture Depot', now(), now())", function(error, rows, fields){
             done()
         });
 
@@ -112,7 +87,8 @@ describe("Job Posting POST", function(){
             title: "Assembly Line Worker",
             description: "Manufacture spring for automobiles",
             location: "Waterloo, ON",
-            wage: "16.5"
+            wage: "16.5",
+            company: 'Toyota'
         }).expect(200, done);
     });
 
@@ -121,7 +97,8 @@ describe("Job Posting POST", function(){
             title: "Cashier",
             description: "Process sales and returns at checkout",
             location: "Hamilton, ON",
-            wage: "15.65"
+            wage: "15.65",
+            company: 'Walmart'
         }).expect(200, done);
     });
 });
@@ -134,7 +111,8 @@ describe("Job Posting PATCH", function(){
             title: "Robot Assembly Line Worker",
             description: "Monitor machines and perform maintenance",
             location: "Kitchener, ON",
-            wage: "18.25"
+            wage: "18.25",
+            company: "Honda"
         }).expect(200, done);
     });
 
@@ -153,6 +131,12 @@ describe("Job Posting PATCH", function(){
     it("Update wage field of job posting with ID of 1", function(done){
         request(app).patch("/wage/1").send({
             wage: "19.5"
+        }).expect(200, done);
+    });
+
+    it("Update company field of job posting with ID of 1", function(done){
+        request(app).patch("/company/1").send({
+            company: "Ford"
         }).expect(200, done);
     });
 });

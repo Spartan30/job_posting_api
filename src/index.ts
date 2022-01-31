@@ -105,7 +105,7 @@ app.get('/jobposting/:id', (req: Request, res: Response) => {
 
 //POST jobposting
 //Param: id
-//Body: title, description, location, wage
+//Body: title, description, location, wage, company
 //Insert new job posting into database with a specific id (mainly for testing purposes)
 app.post('/jobposting/:id', (req: Request, res: Response) => {
     
@@ -114,8 +114,9 @@ app.post('/jobposting/:id', (req: Request, res: Response) => {
     const { description } = req.body;
     const { location } = req.body;
     const { wage } = req.body;
+    const { company } = req.body;
 
-    if (!id || !title || !description || !location || !wage) {
+    if (!id || !title || !description || !location || !wage || !company) {
         res.status(400).send({ error: 'Missing required data'})
     }
     else if(isNaN(wage)){
@@ -124,7 +125,7 @@ app.post('/jobposting/:id', (req: Request, res: Response) => {
     else{
 
         //Execute Insert query
-        connection.query("INSERT INTO job_postings VALUES(?, ?, ?, ?, ?, now(), now())",[id, title, description, location, wage], function(error, rows, fields){
+        connection.query("INSERT INTO job_postings VALUES(?, ?, ?, ?, ?, ?, now(), now())",[id, title, description, location, wage, company], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
                 console.log(error)
@@ -150,7 +151,7 @@ app.post('/jobposting/:id', (req: Request, res: Response) => {
 
 //POST jobposting
 //Param: n/a
-//Body: title, description, location, wage
+//Body: title, description, location, wage, company
 //Insert new job posting into database
 app.post('/jobposting', (req: Request, res: Response) => {
     
@@ -158,8 +159,9 @@ app.post('/jobposting', (req: Request, res: Response) => {
     const { description } = req.body;
     const { location } = req.body;
     const { wage } = req.body;
+    const { company } = req.body;
 
-    if (!title || !description || !location || !wage) {
+    if (!title || !description || !location || !wage || !company) {
         res.status(400).send({ error: 'Missing required data'})
     }
     else if(isNaN(wage)){
@@ -168,7 +170,7 @@ app.post('/jobposting', (req: Request, res: Response) => {
     else{
 
         //Execute Insert query
-        connection.query("INSERT INTO job_postings VALUES(NULL, ?, ?, ?, ?, now(), now())",[title, description, location, wage], function(error, rows, fields){
+        connection.query("INSERT INTO job_postings VALUES(NULL, ?, ?, ?, ?, ?, now(), now())",[title, description, location, wage, company], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
                 console.log(error)
@@ -194,7 +196,7 @@ app.post('/jobposting', (req: Request, res: Response) => {
 
 //PATCH jobposting
 //Param: id
-//Body: title, description, location, wage
+//Body: title, description, location, wage, company
 //Update all the fields for a job posting with a specific id
 app.patch('/jobposting/:id', (req: Request, res: Response) => {
 
@@ -203,8 +205,9 @@ app.patch('/jobposting/:id', (req: Request, res: Response) => {
     const { description } = req.body;
     const { location } = req.body;
     const { wage } = req.body;
+    const { company } = req.body;
 
-    if (!id || !title || !description || !location || !wage) {
+    if (!id || !title || !description || !location || !wage || !company) {
         res.status(400).send({ error: 'Missing required data'})
     }
     else if(isNaN(wage)){
@@ -213,7 +216,7 @@ app.patch('/jobposting/:id', (req: Request, res: Response) => {
     else{
 
         //Execute Update query
-        connection.query("UPDATE job_postings SET title = ?, description = ?, location = ?, hourly_wage = ?, updated = now() WHERE id = ?",[title, description, location, wage, id], function(error, rows, fields){
+        connection.query("UPDATE job_postings SET title = ?, description = ?, location = ?, hourly_wage = ?, company = ?, updated = now() WHERE id = ?",[title, description, location, wage, company, id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
                 console.log(error)
@@ -374,6 +377,44 @@ app.patch('/wage/:id', (req: Request, res: Response) => {
 
         //Execute Update query
         connection.query("UPDATE job_postings SET hourly_wage = ?, updated = now() WHERE id = ?",[wage, id], function(error, rows, fields){
+            if(!!error){
+                console.log('Error: query failed');
+                console.log(error)
+
+                res.status(500).send({
+                    error: "Query failed"
+                });
+            }
+            else{
+                console.log('Successful query');
+                console.log(rows);
+
+                res.status(200).send({
+                    result: rows
+                });
+            }
+        });
+    
+    }
+
+});
+
+//PATCH company
+//Param: id
+//Body: company
+//Update the company field for a job posting with a specific id
+app.patch('/company/:id', (req: Request, res: Response) => {
+
+    const { id } = req.params;
+    const { company } = req.body;
+
+    if (!id || !company ) {
+        res.status(400).send({ error: 'Missing required data'})
+    }
+    else{
+
+        //Execute Update query
+        connection.query("UPDATE job_postings SET company = ?, updated = now() WHERE id = ?",[company, id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
                 console.log(error)

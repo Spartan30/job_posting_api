@@ -33,4 +33,5 @@ PATCH  '/title/:id'       - Update the 'title' field for a job posting with a sp
 PATCH  '/description/:id' - Update the 'description' field for a job posting with a specific ID
 PATCH  '/location/:id'    - Update the 'location' field for a job posting with a specific ID
 PATCH  '/wage/:id'        - Update the 'wage' field for a job posting with a specific ID
+PATCH  '/company/:id'     - Update the 'company' field for a job posting with a specific ID
 DELETE '/jobposting/:id'  - Delete a job posting with a specific ID
