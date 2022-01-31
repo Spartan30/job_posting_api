@@ -29,12 +29,14 @@ connection.connect(function(error){
 const app: express.Application = express();
 const PORT = 5000;
 
+//Middleware
 app.use(express.json());
 
 
 //Display Hello World home page
 app.get('/', (req: Request, res: Response) => {
     
+    //Reply with Hello World message to show that the server is up
     res.status(200).send('Hello World');
 
 });
@@ -46,6 +48,7 @@ app.get('/', (req: Request, res: Response) => {
 //Get all job postings
 app.get('/jobposting', (req: Request, res: Response) => {
 
+    //Execute Select query
     connection.query("SELECT * FROM job_postings", function(error, rows, fields){
         if(!!error){
             console.log('Error: query failed');
@@ -79,6 +82,7 @@ app.get('/jobposting/:id', (req: Request, res: Response) => {
     }
     else{
 
+        //Execute Select query
         connection.query("SELECT * FROM job_postings WHERE id = ?", [id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
@@ -119,7 +123,7 @@ app.post('/jobposting/:id', (req: Request, res: Response) => {
     }
     else{
 
-        //Execute insert query
+        //Execute Insert query
         connection.query("INSERT INTO job_postings VALUES(?, ?, ?, ?, ?, now(), now())",[id, title, description, location, wage], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
@@ -163,7 +167,7 @@ app.post('/jobposting', (req: Request, res: Response) => {
     }
     else{
 
-        //Execute insert query
+        //Execute Insert query
         connection.query("INSERT INTO job_postings VALUES(NULL, ?, ?, ?, ?, now(), now())",[title, description, location, wage], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
@@ -208,7 +212,7 @@ app.patch('/jobposting/:id', (req: Request, res: Response) => {
     }
     else{
 
-        //Execute insert query
+        //Execute Update query
         connection.query("UPDATE job_postings SET title = ?, description = ?, location = ?, hourly_wage = ?, updated = now() WHERE id = ?",[title, description, location, wage, id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
@@ -247,7 +251,7 @@ app.patch('/title/:id', (req: Request, res: Response) => {
     }
     else{
 
-        //Execute insert query
+        //Execute Update query
         connection.query("UPDATE job_postings SET title = ?, updated = now() WHERE id = ?",[title, id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
@@ -286,7 +290,7 @@ app.patch('/description/:id', (req: Request, res: Response) => {
     }
     else{
 
-        //Execute insert query
+        //Execute Update query
         connection.query("UPDATE job_postings SET description = ?, updated = now() WHERE id = ?",[description, id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
@@ -326,7 +330,7 @@ app.patch('/location/:id', (req: Request, res: Response) => {
     }
     else{
 
-        //Execute insert query
+        //Execute Update query
         connection.query("UPDATE job_postings SET location = ?, updated = now() WHERE id = ?",[location, id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
@@ -368,7 +372,7 @@ app.patch('/wage/:id', (req: Request, res: Response) => {
     }
     else{
 
-        //Execute insert query
+        //Execute Update query
         connection.query("UPDATE job_postings SET hourly_wage = ?, updated = now() WHERE id = ?",[wage, id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
@@ -406,7 +410,7 @@ app.delete('/jobposting/:id', (req: Request, res: Response) => {
     }
     else{
 
-        //Execute insert query
+        //Execute Delete query
         connection.query("DELETE FROM job_postings WHERE id = ?",[id], function(error, rows, fields){
             if(!!error){
                 console.log('Error: query failed');
