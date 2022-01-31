@@ -7,7 +7,7 @@
     "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
     "build": "tsc -p .",
-    "test": "mocha --check-leaks --exit -r ts-node/register test/index.test.ts",
+    "test": "mocha --check-leaks --exit -r ts-node/register src/index.test.ts",
     "clean": "rm -rf build/*"
   },
   "keywords": [],
@@ -29,6 +29,7 @@
   "dependencies": {
     "express": "^4.17.2",
     "mysql": "^2.18.1",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "npm": "^8.4.0"
   }
 }
